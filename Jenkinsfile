@@ -10,7 +10,7 @@ pipeline {
             steps {
                 git 'https://github.com/wickett/word-cloud-generator.git'
                 sh '''
-                apt install gzip -y
+                apt update && apt upgrade $$ apt install gzip -y
                 export GOPATH=$WORKSPACE/go
                 export PATH="$PATH:$(go env GOPATH)/bin"
                 go get github.com/tools/godep
