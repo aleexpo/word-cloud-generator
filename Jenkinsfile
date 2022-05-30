@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+    label 'cloud'
+    }
     stages {
         stage ('Pull sourcecode') {
             agent {
