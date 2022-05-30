@@ -28,7 +28,7 @@ pipeline {
                         file: './artifacts/word-cloud-generator.gz',
                         type: 'gz']
                     ], 
-                    credentialsId: 'nexus-creds', 
+                    credentialsId: 'nexus_uploader', 
                     groupId: "$git_branch", 
                     nexusUrl: 'localhost:8081', 
                     nexusVersion: 'nexus3', 
