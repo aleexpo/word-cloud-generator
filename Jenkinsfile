@@ -10,6 +10,7 @@ pipeline {
             steps {
                 git 'https://github.com/wickett/word-cloud-generator.git'
                 sh '''
+                go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
                 export GOPATH=$WORKSPACE/go
                 export PATH="$PATH:$(go env GOPATH)/bin"
                 go get github.com/tools/godep
