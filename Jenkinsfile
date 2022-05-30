@@ -10,7 +10,6 @@ pipeline {
             steps {
                 git 'https://github.com/wickett/word-cloud-generator.git'
                 sh '''
-                go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
                 export GOPATH=$WORKSPACE/go
                 export PATH="$PATH:$(go env GOPATH)/bin"
                 go get github.com/tools/godep
@@ -18,8 +17,6 @@ pipeline {
                 go get github.com/GeertJohan/go.rice/rice
                 go get github.com/wickett/word-cloud-generator/wordyapi
                 go get github.com/gorilla/mux
-                make lint
-                make test
                 sed -i "s/1.DEVELOPMENT/1.$BUILD_NUMBER/g" static/version
                 GOOS=linux GOARCH=amd64 go build -o ./artifacts/word-cloud-generator -v
                 gzip -f ./artifacts/word-cloud-generator
