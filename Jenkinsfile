@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ('Pull sourcecode') {
             agent {
-                Dockerfile { 
+                dockerfile { 
                 filename 'Dockerfile' args '--network host'
                 }
             }
@@ -43,7 +43,7 @@ pipeline {
         }
         stage ('Tests'){
             agent {
-                Dockerfile {
+                dockerfile {
                     filename 'src/Dockerfile' args '--network host'
                     
                 }
