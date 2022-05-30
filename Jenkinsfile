@@ -23,7 +23,7 @@ pipeline {
                 GOOS=linux GOARCH=amd64 go build -o ./artifacts/word-cloud-generator -v
                 gzip -f ./artifacts/word-cloud-generator
                 '''
-                nexusArtifactUploader artifacts: [[artifactId: 'word-cloud-generator', classifier: '', file: './artifacts/word-cloud-generator.gz', type: 'gz']], credentialsId: 'nexus_uploader', groupId: '$git_branch', nexusUrl: 'http://localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'word-cloud-build', version: '1.$BUILD_NUMBER'
+                nexusArtifactUploader artifacts: [[artifactId: 'word-cloud-generator', classifier: '', file: './artifacts/word-cloud-generator.gz', type: 'gz']], credentialsId: 'nexus_uploader', groupId: '$git_branch', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'word-cloud-build', version: '1.$BUILD_NUMBER'
             }
         }
         stage ('Tests'){
