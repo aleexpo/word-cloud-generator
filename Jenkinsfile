@@ -41,9 +41,9 @@ pipeline {
             curl -X GET "http://localhost:8081/repository/word-cloud-build/master/word-cloud-generator/1.$BUILD_NUMBER/word-cloud-generator-1.$BUILD_NUMBER.gz" -o /opt/wordcloud/word-cloud-generator.gz
             ls /opt/wordcloud/
             gunzip -f /opt/wordcloud/word-cloud-generator.gz
-            ls -la
+            ls /opt/wordcloud/
             chmod +x /opt/wordcloud/word-cloud-generator
-            ls -la
+            ls /opt/wordcloud/
             /opt/wordcloud/word-cloud-generator
             res=`curl -s -H "Content-Type: application/json" -d '{"text":"ths is a really really really important thing this is"}' http://localhost:8888/version | jq '. | length'`
             if [ "1" != "$res" ]; then
