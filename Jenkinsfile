@@ -50,7 +50,8 @@ pipeline {
             }
             steps {
             sh '''
-            apk add curl jq -y
+            apk add curl
+            apk add jq
             curl -X GET "http://localhost:8081/repository/word-cloud-build/$git_branch/word-cloud-generator/1.$BUILD_NUMBER/word-cloud-generator-1.$BUILD_NUMBER.gz" -o /opt/wordcloud/word-cloud-generator.gz
             gunzip -f /opt/wordcloud/word-cloud-generator.gz
             chmod +x /opt/wordcloud/word-cloud-generator
