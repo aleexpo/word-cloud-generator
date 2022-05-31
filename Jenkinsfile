@@ -47,27 +47,30 @@ pipeline {
                 }
             }
             steps {
-            sh '''
-            apk add curl
-            apk add jq
-            apk add gcompat
-            curl -X GET "http://localhost:8081/repository/word-cloud-build/master/word-cloud-generator/1.$BUILD_NUMBER/word-cloud-generator-1.$BUILD_NUMBER.gz" -o /opt/wordcloud/word-cloud-generator.gz
-            ls /opt/wordcloud/
-            gunzip -f /opt/wordcloud/word-cloud-generator.gz
-            ls /opt/wordcloud/
-            chmod +x /opt/wordcloud/word-cloud-generator
-            ls /opt/wordcloud/
-            /opt/wordcloud/word-cloud-generator&
-            sleep 10
-            res=`curl -s -H "Content-Type: application/json" -d '{"text":"ths is a really really really important thing this is"}' http://localhost:8888/version | jq '. | length'`
-            if [ "1" != "$res" ]; then
-            exit 99
-            fi
-            res=`curl -s -H "Content-Type: application/json" -d '{"text":"ths is a really really really important thing this is"}' http://localhost:8888/api | jq '. | length'`
-            if [ "7" != "$res" ]; then
-            exit 99
-            fi
-            '''
+                withCredentials([usernamePassword(credentialsId: 'nexus_downloader', passwordVariable: '$usr_pswd', usernameVariable: '$usr_name')]) {
+            
+                    sh '''
+                    apk add curl
+                    apk add jq
+                    apk add gcompat
+                    curl -X GET "http://localhost:8081/repository/word-cloud-build/master/word-cloud-generator/1.$BUILD_NUMBER/word-cloud-generator-1.$BUILD_NUMBER.gz" -o /opt/wordcloud/word-cloud-generator.gz
+                    ls /opt/wordcloud/
+                    gunzip -f /opt/wordcloud/word-cloud-generator.gz
+                    ls /opt/wordcloud/
+                    chmod +x /opt/wordcloud/word-cloud-generator
+                    ls /opt/wordcloud/
+                    /opt/wordcloud/word-cloud-generator&
+                    sleep 10
+                    res=`curl -s -H "Content-Type: application/json" -d '{"text":"ths is a really really really important thing this is"}' http://localhost:8888/version | jq '. | length'`
+                    if [ "1" != "$res" ]; then
+                    exit 99
+                    fi
+                    res=`curl -s -H "Content-Type: application/json" -d '{"text":"ths is a really really really important thing this is"}' http://localhost:8888/api | jq '. | length'`
+                    if [ "7" != "$res" ]; then
+                    exit 99
+                    fi
+                    '''
+                }   
             }
         }
     }
