@@ -15,6 +15,7 @@ pipeline {
                 export GOPATH=$WORKSPACE/go
                 export PATH="$PATH:$(go env GOPATH)/bin"
                 go get github.com/smartystreets/goconvey
+                make lint
                 make test
                 sed -i "s/1.DEVELOPMENT/1.$BUILD_NUMBER/g" static/version
                 GOOS=linux GOARCH=amd64 go build -o ./artifacts/word-cloud-generator -v
@@ -56,7 +57,7 @@ pipeline {
             ls /opt/wordcloud/
             chmod +x /opt/wordcloud/word-cloud-generator
             ls /opt/wordcloud/
-            /opt/wordcloud/word-cloud-generator& 
+            /opt/wordcloud/word-cloud-generator
             res=`curl -s -H "Content-Type: application/json" -d '{"text":"ths is a really really really important thing this is"}' http://localhost:8888/version | jq '. | length'`
             if [ "1" != "$res" ]; then
             exit 99
