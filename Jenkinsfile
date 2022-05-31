@@ -58,6 +58,7 @@ pipeline {
             chmod +x /opt/wordcloud/word-cloud-generator
             ls /opt/wordcloud/
             /opt/wordcloud/word-cloud-generator&
+            sleep 10
             res=`curl -s -H "Content-Type: application/json" -d '{"text":"ths is a really really really important thing this is"}' http://localhost:8888/version | jq '. | length'`
             if [ "1" != "$res" ]; then
             exit 99
