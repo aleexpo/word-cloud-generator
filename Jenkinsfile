@@ -53,7 +53,7 @@ pipeline {
                     apk add curl
                     apk add jq
                     apk add gcompat
-                    curl -X GET "http://localhost:8081/repository/word-cloud-build/master/word-cloud-generator/1.$BUILD_NUMBER/word-cloud-generator-1.$BUILD_NUMBER.gz" -o /opt/wordcloud/word-cloud-generator.gz
+                    curl -u ${usr_name}:${usr_pswd} -X GET "http://localhost:8081/repository/word-cloud-build/master/word-cloud-generator/1.$BUILD_NUMBER/word-cloud-generator-1.$BUILD_NUMBER.gz" -o /opt/wordcloud/word-cloud-generator.gz
                     ls /opt/wordcloud/
                     gunzip -f /opt/wordcloud/word-cloud-generator.gz
                     ls /opt/wordcloud/
